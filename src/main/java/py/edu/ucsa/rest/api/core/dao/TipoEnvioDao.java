@@ -5,9 +5,9 @@ import py.edu.ucsa.rest.api.core.model.TipoEnvio;
 
 public interface TipoEnvioDao {
 	TipoEnvio getById (Integer pk);	/*devolucion, nombre, recibimiento*/
-	void insertar (TipoEnvio tipoEnvioDao);	/*void, cuando no devuelve nada*/
-	void eliminar (TipoEnvio tipoEnvioDao);
-	void actualizar (TipoEnvio tipoEnvioDao);
+	void insertar (TipoEnvio tipoEnvio);	/*void, cuando no devuelve nada*/
+	void eliminar (TipoEnvio tipoEnvio);
+	void actualizar (TipoEnvio tipoEnvio);
 	List<TipoEnvio> listar();
 	TipoEnvio getByCodigo(String codigo);
 }
