@@ -14,7 +14,6 @@ import py.edu.ucsa.rest.api.core.services.OficinaService;
 @Transactional
 public class OficinaServiceImpl implements OficinaService {
 	
-	@SuppressWarnings("unused")
 	@Autowired
 	private OficinaDao oficinaDao;
 	@Override
