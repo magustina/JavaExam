@@ -1,14 +1,14 @@
 package py.edu.ucsa.rest.api.core.dao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.NoResultException;
+
 import py.edu.ucsa.rest.api.core.dao.AbstractDao;
 import py.edu.ucsa.rest.api.core.dao.EnvioDao;
 import py.edu.ucsa.rest.api.core.model.Envio;
-import py.edu.ucsa.rest.api.core.model.Oficina;
-import py.edu.ucsa.rest.api.core.model.Pais;
-import py.edu.ucsa.rest.api.core.model.TipoEnvio;
+
 
 
 public class EnvioDaoImpl extends AbstractDao<Integer, Envio> implements EnvioDao {
@@ -19,41 +19,6 @@ public class EnvioDaoImpl extends AbstractDao<Integer, Envio> implements EnvioDa
 		return super.getById(id);
 	}
 
-	@Override
-	public Envio getByPais(Pais idPais) {		
-		try {
-			return (Envio) getEntityManager()
-					.createNamedQuery("SELECT p FROM Envio p WHERE p.pais = :idPais ")
-					.setParameter("idPais", idPais)
-					.getSingleResult();
-		}catch(NoResultException e) {
-			return null;
-		}
-	}
-
-	@Override
-	public Envio getByOficina(Oficina idOficina) {
-		try {
-			return (Envio) getEntityManager()
-					.createNamedQuery("SELECT o FROM Envio o WHERE o.oficina = :idOficina ")
-					.setParameter("idOficina", idOficina)
-					.getSingleResult();
-		}catch(NoResultException e) {
-			return null;
-	}
-	}
-
-	@Override
-	public Envio getByTipoEnvio(TipoEnvio idTipoEnvio) {
-		try {
-			return (Envio) getEntityManager()
-					.createNamedQuery("SELECT te FROM Envio te WHERE te.tipoEnvio = :idTipoEnvio ")
-					.setParameter("idTipoEnvio", idTipoEnvio)
-					.getSingleResult();
-		}catch(NoResultException e) {
-			return null;
-	}
-	}
 
 	@Override
 	public void insertar(Envio envio) {
@@ -75,14 +40,24 @@ public class EnvioDaoImpl extends AbstractDao<Integer, Envio> implements EnvioDa
 
 	@Override
 	public List<Envio> listar() {
-		// TODO Auto-generated method stub
-		return null;
+		@SuppressWarnings("unchecked")
+		List<Envio> envio = getEntityManager()
+				.createNamedQuery("TiposEnvios.findAll")
+				.getResultList();
+		return envio;
 	}
 
 	@Override
-	public Envio getByUnique(Pais id_origen, Pais id_destino, Oficina id_oficina_destino, TipoEnvio tipo_envio) {
-		// TODO Auto-generated method stub
-		return null;
+	public Envio getByUnique(Date fecha, String rastreo) {
+		try {
+			return (Envio) getEntityManager()
+					.createQuery("SELECT t FROM Envio t WHERE t.fecha_envio = :fecha and t.nro_rastreo = :rastreo")
+					.setParameter("fecha", fecha)
+					.setParameter("rastreo", rastreo)
+					.getSingleResult();
+		}catch(NoResultException e) {
+			return null;
+		}
 	}
 
 }

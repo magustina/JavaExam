@@ -3,6 +3,7 @@ package py.edu.ucsa.rest.api.core.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import py.edu.ucsa.rest.api.core.dao.AbstractDao;
@@ -41,18 +42,22 @@ public class OficinaDaoImpl extends AbstractDao<Integer, Oficina> implements Ofi
 	public List<Oficina> listar() {
 		List<Oficina> lista = new ArrayList<Oficina>();
 		EntityManager em = getEntityManager();
-		Query query = em.createQuery("SELECT o FROM Oficia o");
+		Query query = em.createQuery("SELECT o FROM Oficina o");
 		lista = query.getResultList();
 		return lista;
 	}
 
 	@Override
 	public Oficina getByCodigo(String cod) {
+	try {
 		EntityManager em = getEntityManager();
-		Query query = em.createQuery("SELECT o FROM Oficia o WHERE o.codigo = :cod");
+		Query query = em.createQuery("SELECT o FROM Oficina o WHERE o.codigo = :cod");
 		query.setParameter("cod", cod);
 		Oficina oficina = (Oficina) query.getSingleResult();
 		return oficina;
+	}catch(NoResultException e) {
+		return null;
+	}
 	}
 
 }

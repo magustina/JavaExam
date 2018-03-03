@@ -2,8 +2,13 @@ package py.edu.ucsa.rest.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Import;
 
-@SpringBootApplication
+@SpringBootApplication (scanBasePackages= {"py.edu.ucsa.rest.api.core.dao",
+		   "py.edu.ucsa.rest.api.core.services",
+		   "py.edu.ucsa.rest.api.web.controllers"})
+
+@Import(JpaConfiguration.class)
 public class Application {
 
 	public static void main(String[] args) {

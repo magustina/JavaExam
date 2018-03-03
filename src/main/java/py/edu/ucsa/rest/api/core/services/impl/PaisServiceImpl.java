@@ -1,4 +1,4 @@
-package py.edu.ucsas.rest.api.core.services.impl;
+package py.edu.ucsa.rest.api.core.services.impl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
