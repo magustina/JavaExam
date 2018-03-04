@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @NamedQuery (name="Oficina.findAll", query= "SELECT o FROM Oficina o")
 public class Oficina implements Serializable{
 	
-		public static final long serialVersionUID=1;
+		public static final long serialVersionUID=1L;
 		
 		@Id	
 		@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -60,5 +60,7 @@ public class Oficina implements Serializable{
 		public void setEstado(String estado) {
 			this.estado = estado;
 		}
+		
+		
 				
 }

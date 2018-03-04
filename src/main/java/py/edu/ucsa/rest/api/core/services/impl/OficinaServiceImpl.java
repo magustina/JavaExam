@@ -16,6 +16,7 @@ public class OficinaServiceImpl implements OficinaService {
 	
 	@Autowired
 	private OficinaDao oficinaDao;
+	
 	@Override
 	public Oficina getById(Integer pk) {
 		return oficinaDao.getById(pk);
@@ -23,20 +24,11 @@ public class OficinaServiceImpl implements OficinaService {
 
 	@Override
 	public void insertar(Oficina oficina) {
-		oficinaDao.insertar(oficina);
-
-	}
-
-	@Override
-	public void eliminar(Oficina oficina) {
-		oficinaDao.eliminar(oficina);
-
-	}
-
-	@Override
-	public void actualizar(Oficina oficina) {
-		oficinaDao.actualizar(oficina);
-
+		if(oficina.getId() == null) {
+			oficinaDao.insertar(oficina);
+		}else {
+			oficinaDao.actualizar(oficina);
+		}
 	}
 
 	@Override
@@ -53,5 +45,4 @@ public class OficinaServiceImpl implements OficinaService {
 	public Oficina getByCodigo(String codigo) {
 		return oficinaDao.getByCodigo(codigo);
 	}
-
 }

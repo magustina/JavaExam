@@ -5,17 +5,18 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 
+import org.springframework.stereotype.Repository;
+
 import py.edu.ucsa.rest.api.core.dao.AbstractDao;
 import py.edu.ucsa.rest.api.core.dao.EnvioDao;
 import py.edu.ucsa.rest.api.core.model.Envio;
 
 
-
+@Repository("envioDao")
 public class EnvioDaoImpl extends AbstractDao<Integer, Envio> implements EnvioDao {
 
 	@Override
 	public Envio getById(Integer id) {
-		// TODO Auto-generated method stub
 		return super.getById(id);
 	}
 
@@ -42,7 +43,7 @@ public class EnvioDaoImpl extends AbstractDao<Integer, Envio> implements EnvioDa
 	public List<Envio> listar() {
 		@SuppressWarnings("unchecked")
 		List<Envio> envio = getEntityManager()
-				.createNamedQuery("TiposEnvios.findAll")
+				.createNamedQuery("Envio.findAll")
 				.getResultList();
 		return envio;
 	}
@@ -51,9 +52,9 @@ public class EnvioDaoImpl extends AbstractDao<Integer, Envio> implements EnvioDa
 	public Envio getByUnique(Date fecha, String rastreo) {
 		try {
 			return (Envio) getEntityManager()
-					.createQuery("SELECT t FROM Envio t WHERE t.fecha_envio = :fecha and t.nro_rastreo = :rastreo")
-					.setParameter("fecha", fecha)
-					.setParameter("rastreo", rastreo)
+					.createNamedQuery("Envio.findUnique")
+					.setParameter("fecha_envio", fecha)
+					.setParameter("nro_rastreo", rastreo)
 					.getSingleResult();
 		}catch(NoResultException e) {
 			return null;

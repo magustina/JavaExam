@@ -2,7 +2,9 @@ package py.edu.ucsa.rest.api.core.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
@@ -26,12 +28,6 @@ public class TipoEnvioDaoImpl extends AbstractDao<Integer, TipoEnvio> implements
 	}
 
 	@Override
-	public void eliminar(TipoEnvio tipoEnvio) {
-		super.eliminar(tipoEnvio);
-
-	}
-
-	@Override
 	public void actualizar(TipoEnvio tipoEnvio) {
 		super.actualizar(tipoEnvio);
 
@@ -42,18 +38,23 @@ public class TipoEnvioDaoImpl extends AbstractDao<Integer, TipoEnvio> implements
 	public List<TipoEnvio> listar() {
 		List<TipoEnvio> lista = new ArrayList<TipoEnvio>();
 		EntityManager em = getEntityManager();
-		Query query = em.createQuery("SELECT t FROM TipoEnvio t");
+		Query query = em.createNamedQuery("TiposEnvios.findAll");
 		lista = query.getResultList();
 		return lista;
 	}
 
 	@Override
 	public TipoEnvio getByCodigo(String codigo) {
-		EntityManager em = getEntityManager();
-		Query query = em.createQuery("SELECT t FROM TipoEnvio t WHERE t.codigo = :cod");
-		query.setParameter("cod", codigo);
-		TipoEnvio tipoEnvio = (TipoEnvio) query.getSingleResult();
-		return tipoEnvio;
+		try {
+			EntityManager em = getEntityManager();
+			Query query = em.createQuery("SELECT t FROM TipoEnvio t WHERE t.codigo = :cod");
+			query.setParameter("cod", codigo);
+			TipoEnvio tipoEnvio = (TipoEnvio) query.getSingleResult();
+			return tipoEnvio;
+		}catch(NoResultException e){
+			return null;
+		}
+		
 	}
 
 }

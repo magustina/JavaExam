@@ -24,25 +24,19 @@ public class OficinaDaoImpl extends AbstractDao<Integer, Oficina> implements Ofi
 		super.persistir(oficina);
 
 	}
-
+	
 	@Override
-	public void eliminar(Oficina oficina) {
-		super.eliminar(oficina);
-
-	}
-
-	@Override
-	public void actualizar(Oficina oficina) {
+	public void actualizar (Oficina oficina) {
 		super.actualizar(oficina);
 
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Oficina> listar() {
 		List<Oficina> lista = new ArrayList<Oficina>();
 		EntityManager em = getEntityManager();
-		Query query = em.createQuery("SELECT o FROM Oficina o");
+		Query query = em.createNamedQuery("Oficina.findAll");
 		lista = query.getResultList();
 		return lista;
 	}

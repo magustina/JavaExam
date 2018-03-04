@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
@@ -27,12 +28,6 @@ public class PaisDaoImpl extends AbstractDao<Integer, Pais> implements PaisDao {
 	}
 
 	@Override
-	public void eliminar(Pais paisDao) {
-		super.eliminar(paisDao);
-
-	}
-
-	@Override
 	public void actualizar(Pais paisDao) {
 		super.actualizar(paisDao);
 	}
@@ -42,17 +37,21 @@ public class PaisDaoImpl extends AbstractDao<Integer, Pais> implements PaisDao {
 	public List<Pais> listar() {
 		List<Pais> lista = new ArrayList<Pais>();
 		EntityManager em = getEntityManager();
-		Query query = em.createQuery("SELECT l FROM Pais l");
+		Query query = em.createNamedQuery("Pais.findAll");
 		lista = query.getResultList();
 		return lista;
 	}
 
 	@Override
 	public Pais getByCodigo(String cod) {
+		try {
 		EntityManager em = getEntityManager();
 		Query query = em.createQuery("SELECT p FROM Pais p WHERE p.codigo = :cod");
 		query.setParameter("cod", cod);
 		Pais pais = (Pais) query.getSingleResult();
 		return pais;
+	}catch (NoResultException e){
+		return null;
+		}
 	}
 }

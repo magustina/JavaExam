@@ -2,6 +2,7 @@ package py.edu.ucsa.rest.api.core.model;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,12 +10,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table (name="envios")
-@NamedQuery (name="Envio.findAll", query= "SELECT e FROM Envio e")
+@NamedQueries({
+	@NamedQuery (name="Envio.findAll", query= "SELECT e FROM Envio e"),
+	@NamedQuery( name="Envio.findUnique", query="SELECT e FROM Envio e WHERE e.nro_rastreo = :nro_rastreo and e.fecha_envio = :fecha_envio")	
+})
+
 public class Envio implements Serializable{
 	public static final long serialVersionUID=1;
 

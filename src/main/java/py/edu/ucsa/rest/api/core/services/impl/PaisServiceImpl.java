@@ -21,17 +21,11 @@ public class PaisServiceImpl implements PaisService {
 
 	@Override
 	public void insertar(Pais pais) {
-		paisDao.insertar(pais);
-	}
-
-	@Override
-	public void eliminar(Pais pais) {
-		paisDao.eliminar(pais);
-	}
-
-	@Override
-	public void actualizar(Pais pais) {
-		paisDao.actualizar(pais);
+		if(pais.getId() == null) {
+			paisDao.insertar(pais);
+		}else {
+			paisDao.actualizar(pais);
+		}
 	}
 
 	@Override
